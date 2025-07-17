@@ -14,7 +14,7 @@ import { PiTerminalWindow } from "react-icons/pi";
 import { Clock3,Dot,ThumbsUp} from "lucide-react";
 import { IoMdChatbubbles } from "react-icons/io";
 
-function MainContent({setVisible,visible}){
+function MainContent({setVisible,visible,theme,setTheme}){
     const details =[
         {
             icon:<ThumbsUp size={28}/>,
@@ -78,7 +78,7 @@ function MainContent({setVisible,visible}){
                 </div>
                 <div className="flex gap-2 items-center">
                     <p>16 May, 2023</p>
-                    <p className="bg-gray-300 p-2 rounded-full"><FaCalendarAlt className="" size={24}/></p>
+                    <p className={` ${theme=="light" ? "text-white":"text-black"} bg-gray-300 p-2 rounded-full`}><FaCalendarAlt className="" size={24}/></p>
                 </div>
             </div>
             <div className="flex w-full border-t border-b border-gray-300 p-5">
@@ -86,7 +86,7 @@ function MainContent({setVisible,visible}){
                         return(
                             <div key={index} className={`flex gap-4 w-1/2  items-center px-10 ${detail.title=="Tracked" ? "justify-center border-r border-l border-gray-300":detail.title=="Finished"?"justify-start":"justify-end"}`}>
                                 <div>
-                                    <p className="bg-gray-300 p-2  rounded-full">
+                                    <p className={`bg-gray-300 p-2 ${theme=="light" ? "text-white":"text-black"} rounded-full`}>
                                         {detail.icon}
                                     </p>
                                 </div>
@@ -107,14 +107,14 @@ function MainContent({setVisible,visible}){
             <div className="">
                 <div className="flex justify-between px-10">
                     <h2 className="text-2xl">Performance</h2>
-                    <div className="flex items-center bg-gray-200 rounded-full p-2 cursor-pointer">
+                    <div className={`flex items-center ${theme=="light" ? "text-white":"text-black"} bg-gray-200 rounded-full p-2 cursor-pointer`}>
                         <p className="">01-07 May</p>
                         <span><RiArrowDownSLine size={24} className=""/></span>
                     </div>
                 </div>
                     <br />
                     <br />
-                <div className="bg-white pr-10">
+                <div className={`${theme=="light" ?"bg-white":"bg-black"} pr-10`}>
                         <Chart/>
                 </div>
             </div>
@@ -137,18 +137,21 @@ function MainContent({setVisible,visible}){
                     return(
                         <div key={index} className="flex justify-between px-12 gap-10">
                             <div className="flex gap-2 w-1/3 items-center">
-                                <p className={`${task.iconBg} rounded-full p-4`}>{task.icon}</p>
+                                <p className={`${theme==="light" ? task.iconBg:"bg-red-100 text-black"} rounded-full p-4 `}>{task.icon}</p>
                                 <h2>{task.title}</h2>
                             </div>
                             <div className="flex text-center items-center w-1/3">
                                 <Dot className={`${task.statusColor}`} size={50}/>
                                 <p className="">{task.status}</p>
                             </div>
-                            <div className="flex w-1/5 gap-3">
+                            <div className="flex w-1/5 gap-3 items-center">
                                 <Clock3 className="bg-gray-300 rounded-full text-white"/>
                                 <p className="">{task.time}</p>
                             </div>
-                            <p><TfiMoreAlt/></p>
+                            <div className="flex items-center">
+                                <p><TfiMoreAlt/></p>
+                            </div>
+                            
                         </div>
                     )
                 })}
